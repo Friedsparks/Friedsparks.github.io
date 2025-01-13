@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MCQ Quiz</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      background-color:rgb(252, 174, 40);
+    }
+    #quiz-container {
+      width: 960px;
+      height: 540px;
+      background: #fff;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      border-radius: 8px;
+      text-align: center;
+    }
+    #progress-bar {
+      width: 100%;
+      height: 20px;
+      background: #c5c3c3;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+    #progress {
+      width: 0;
+      height: 100%;
+      background: #06dd0d;
+      transition: width 0.3s;
+    }
+    .question {
+      margin-bottom: 20px;
+      font-size: 1.2em;
+    }
+    .options button {
+      display: block;
+      margin: 10px auto;
+      padding: 10px 20px;
+      font-size: 1em;
+      cursor: pointer;
+    }
+    .options button.correct {
+      background-color: #4caf50;
+      color: #fff;
+    }
+    .options button.incorrect {
+      background-color: #ff1100;
+      color: #fff;
+    }
+    #comment {
+      margin-top: 20px;
+      font-size: 1.1em;
+    }
+    #score {
+      font-size: 1.4em;
+      margin-top: 20px;
+    }
+    #score button{
+      margin:10px;
+      padding: 20px;
+      font-size:1.5em;
+    }
+  </style>
+</head><body><div id="quiz-container">
+<div id="progress-bar">
+<div id="progress"></div>
+</div>
+<div id="quiz">
+<p id="question-number">Question 2</p>
+<p class="question"></p>
+<div class="options"></div>
+<div id="comment"></div>
+</div>
+<div id="score" style="display: none;"></div>
+</div>
+<p><script>
+    const questions = [
+    { 
+        img: "people with computer.jpg",
+        question: "What part of Generative AI allows you to view previous chats?", 
+        options: ["Response area","Chat history","Text/voice input field", "Account settings",], 
+        answer: 1, 
+        comment: "The chat history enables you to refer to old chats for inspiration in making prompts."
+      },
+      ];
+    let currentQuestion = 0;
+    let score = 0;
+    let msg = "";
+
+    function loadQuestion() {
+      const question = questions[currentQuestion];
+      $("#question-number").text(`Question ${currentQuestion + 1}/${questions.length}`);
+      $(".question").text(question.question);
+      if(question.img!=""){
+      $(".question").prepend("<img src='"+question.img+" 'width='200'/s><br/>");
+      }
+      $(".options").empty();
+      question.options.forEach((option, index) => {
+        $(".options").append(`<button data-index="${index}">${option}</button>`);
+      });
+      $("#comment").text("");
+    }
+
+    function updateProgressBar() {
+      const progress = ((currentQuestion + 1) / questions.length) * 100;
+      $("#progress").css("width", `${progress}%`);
+    }
+
+    $(document).ready(function () {
+      loadQuestion();
+      updateProgressBar();
+
+      $(".options").on("click", "button", function () {
+        //disable all the buttons after clicking once
+        $(".options button").attr("disable","disabled");
+
+        const selected = $(this).data("index");
+        const question = questions[currentQuestion];
+
+        if (selected === question.answer) {
+          $(this).addClass("correct");
+          score++;
+        } else {
+          $(this).addClass("incorrect");
+          $(`.options button[data-index='${question.answer}']`).addClass("correct");
+        }
+
+        $("#comment").text(question.comment);
+
+        setTimeout(() => {
+          currentQuestion++;
+          if (currentQuestion < questions.length) {
+            loadQuestion();
+            updateProgressBar();
+          } else {
+            $("#quiz").hide();
+            //check if score is less than 1
+            if(score<1){
+              msg= "<img src='Sparks (sad).png' width='250'/><br/><h1>Why not revise and try again?</h1>";
+            } else {
+              msg= "<img src='Sparks (happy).png' width='250'/><br/>That's correct! <a href='Page 14.html'>Click here to continue.</a>";
+            }
+            $("#score").fadeIn("slow").html(msg+`You scored ${score} out of ${questions.length}!`+"<br/><a href='Page 12.html'><button>Revise</button></a>");
+          }
+          //change the number to increase/decrease the pause between each question
+        }, 4000);
+        
+      });
+    });
+  </script></p></body></html>
