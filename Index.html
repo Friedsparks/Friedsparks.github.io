@@ -1,0 +1,60 @@
+<html>
+    <head>
+        <title>Class Time With Sparks and Bolt! An Interactive Story</title>
+        <style>
+            /*Center everything (text and images) in the body and image-container*/
+            body{
+                margin:0px;
+                padding:20px;
+                color:white;
+                font-family: sans-serif; 
+            }
+            #container{
+                background:rgb(252, 174, 40);
+                width:960px;
+                height:540px;
+                padding: 100px;
+                box-sizing:border-box;
+                text-align: center;
+            }
+            .image-container {
+                display: grid;
+                grid-template-columns: repeat(2,150px); /*Each column 150px wide*/
+                gap: 5px;      
+            }
+            .image {
+                width: 500px; /* Fixed width for images */
+                height: auto; /*Maintain aspect ratio */
+            }
+            h2{
+             font-size: x-large;
+             margin-bottom: 0px;
+             font-weight: bold;
+             text-align: center;
+            }
+            body{
+                background-image: url("city.png");
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+                width: 100px;
+                height: 500px;
+            }
+        </style>
+    </head>
+    <body>
+<div id="container">
+    <h1> Welcome to this fun interactive story! We hope that you'll learn more about AI with us.</h1>
+    <p><a href="Page 2.html">Click here to start!</a></p>
+<main>
+   <section> 
+    <h2>Are you ready to join the fun with us?</h2>
+    <div class="image-container">
+        <img src="sparkswelcome.png" width="500">
+        <img src="bolthello.png" width="500">
+    </div>
+   </section>
+</main>
+</div>
+    </body>
+</html>   
